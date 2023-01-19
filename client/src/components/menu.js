@@ -11,6 +11,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from "react-router-dom";
 import { color } from "@mui/system";
+import { useSelector } from "react-redux";
 
 
 const Container = styled.div`
@@ -71,72 +72,86 @@ const Button = styled.button`
 `;
 
 const Menu = ({ darkMode, setDarkMode }) => {
-    return(
-        <Container>
-          <Wrapper>
-          <Link to="/" style={{ textDecoration: "none",color:"inherit"}}>
+  const { currentUser } = useSelector((state) => state.user);
+    return (
+      <Container>
+        <Wrapper>
+          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
             <Logo>
-              <Img src={realm}/>
+              <Img src={realm} />
               REALM GAMING
             </Logo>
-            </Link>
-            <Item>
-            <HomeIcon/>
+          </Link>
+          <Item>
+            <HomeIcon />
             HOME
-            </Item>
-              <Link to="trends" style={{textDecoration: "none", color:"inherit"}}>
-              <Item>
-              <HomeIcon/>
+          </Item>
+          <Link
+            to="trends"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Item>
+              <HomeIcon />
               EXPLORE
-              </Item>
-            </Link>
-            <Link to="subscriptions" style={{textDecoration: "none", color:"inherit"}}>
-              <Item>
-                <HomeIcon/>
-                FOLLOWING
-              </Item>
-            </Link>
+            </Item>
+          </Link>
+          <Link
+            to="subscriptions"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
             <Item>
-              <VideocamIcon/>
-              YOUR VIDEOS
+              <HomeIcon />
+              FOLLOWING
             </Item>
-            <Hr/>
+          </Link>
+          <Item>
+            <VideocamIcon />
+            YOUR VIDEOS
+          </Item>
+          <Hr />
 
-            <Login>
-          Sign in to like videos, comment, and subscribe.
-          <Button><AccountCircleIcon/>SIGN IN</Button>
-        </Login>
-        <Hr/>
+          {!currentUser&&
+            <>
+              <Login>
+                Sign in to like videos, comment, and subscribe.
+                <Link to="signin" style={{ textDecoration: "none" }}>
+                  <Button>
+                    <AccountCircleIcon />
+                    SIGN IN
+                  </Button>
+                </Link>
+              </Login>
+              <Hr />
+            </>
+          }
 
-            <Item>
-              <LiveTvIcon/>
-              GO LIVE
-            </Item>
+          <Item>
+            <LiveTvIcon />
+            GO LIVE
+          </Item>
 
-            <Item>
-              <HistoryIcon/>
-              HISTORY
-            </Item>
-            
+          <Item>
+            <HistoryIcon />
+            HISTORY
+          </Item>
 
-            <Item>
-              <SettingsIcon/>
-              SETTINGS
-            </Item>
-            <Hr/>
+          <Item>
+            <SettingsIcon />
+            SETTINGS
+          </Item>
+          <Hr />
 
-            <Item>
-              <ReportIcon/>
-              REPORT
-            </Item>
-            <Item onClick={() => setDarkMode(!darkMode)}>
-              <LightModeIcon/>
-              {darkMode ? "LIGHT " : "DARK"}MODE
-            </Item>
-            
-          </Wrapper>
-        </Container>
-    )
+          <Item>
+            <ReportIcon />
+            REPORT
+          </Item>
+          <Item onClick={() => setDarkMode(!darkMode)}>
+            <LightModeIcon />
+            {darkMode ? "LIGHT " : "DARK"}MODE
+          </Item>
+        </Wrapper>
+      </Container>
+    );
 }
 
 export default Menu;

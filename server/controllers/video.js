@@ -7,7 +7,9 @@ export const addVideo = async (req,res,next)=>{
     try{
         const savedVideo = await newVideo.save();
         res.status(200).json(savedVideo);
-    } catch(err){
+        
+    } catch(err){ 
+        //console.log(err);
         next(err);
     }
 };
@@ -69,6 +71,7 @@ export const addView = async (req,res,next)=>{
 };
 export const random = async (req,res,next)=>{
     try{
+        //aggregate gives a rondom sample , here random 40 samples
         const videos = await Video.aggregate([{$sample:{size:40}}])
         res.status(200).json(videos)
     } catch(err){
@@ -77,6 +80,7 @@ export const random = async (req,res,next)=>{
 };
 export const trend = async (req,res,next)=>{
     try{
+        //-1 brings most viewed videos and 1 brings least viewed. 
         const videos = await Video.find().sort({views:-1});
         res.status(200).json(videos)
     } catch(err){
@@ -87,11 +91,13 @@ export const sub = async (req,res,next)=>{
     try{
         const user = await User.findById(req.user.id)
         const subscribedChannels = user.subscribedUsers;
+        //promise.all gives every videos of every channel.
         const list = await Promise.all(
             subscribedChannels.map((channelId)=>{
                 return Video.find({userId: channelId});
             })
         );
+        //sort to see newest video first
         res.status(200).json(list.flat().sort((a,b)=> b.createdAt-a.createdAt));
     } catch(err){
         next(err)
@@ -110,10 +116,12 @@ export const getByTag = async (req,res,next)=>{
 export const search = async (req,res,next)=>{
     const query = req.query.q;
     try{
-        const videos = await Video.find({
-            title:{ $regex: query, $options:"i"},
-        }).limit(40);
-        res.status(200).json(videos)
+      //regex used for matching strings in queries
+      //options: i means we want to carry out search without considering upper or lower case.
+      const videos = await Video.find({
+        title: { $regex: query, $options: "i" },
+      }).limit(40);
+      res.status(200).json(videos);
     } catch(err){
         next(err)
     }

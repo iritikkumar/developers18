@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect,useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -35,17 +36,26 @@ const Text = styled.span`
   font-size: 14px;
 `;
 
-const Comment = () => {
+const Comment = ({comment}) => {
+  const [channel,setChannel] = useState({});
+  useEffect(()=>{
+    const fetchComemnt= async()=>{
+      const channelRes = await axios.get(
+        `/users/find/${comment.data.userId}`
+      );
+      setChannel(channelRes.data);
+    }
+    fetchComemnt();
+  },[comment.userId]);
+  
   return (
     <Container>
-      <Avatar src="https://yt3.ggpht.com/Ik19yjnCjkULRbo1aLK5C2oQLzkIOUdLSlqjecpsW3kuxVKshxi2uQuzu6xJwiqBqT3V1aTqiw=s176-c-k-c0x00ffffff-no-rj" />
+      <Avatar src={channel.img} />
       <Details>
         <Name>
-          Shorya Mittal <Date>1 day ago</Date>
+          {channel.name} <Date>1 day ago</Date>
         </Name>
-        <Text>
-          awesome gameplay
-        </Text>
+        <Text>{comment.desc}</Text>
       </Details>
     </Container>
   );

@@ -1,8 +1,11 @@
 import { createError } from "../error.js";
 import User from "../models/User.js";
 import Video from "../models/Video.js";
+//async function mean that the task is not dependent on other one.
+//sync, the execution of each operation is dependent on the completion of the one before it
 
 export const update = async(req,res,next)=>{
+    //user.id is id through jwt and params.id is the id using currently.
     if(req.params.id === req.user.id){
         try{
            const updatedUser = await User.findByIdAndUpdate(
@@ -10,11 +13,12 @@ export const update = async(req,res,next)=>{
             {
               $set:req.body,
            },
+           //new: true returns the newest version of the user
            {new: true}
            );
            res.status(200).json(updatedUser)
-        }catch{
-
+        }catch(err){
+           next(err)
         }
     }else{
         return next(createError(403,"You can update only your account"))
@@ -28,8 +32,8 @@ export const deleteUser = async (req, res, next) => {
             req.params.id,
            );
            res.status(200).json("User has been deleted.")
-        }catch{
-
+        }catch(err){
+           next(err);
         }
     }else{
         return next(createError(403,"You can delete only your account"))
@@ -80,11 +84,13 @@ export const like = async (req, res, next) => {
     const videoId = req.params.videoId;
     try{
         await Video.findByIdAndUpdate(videoId,{
+            //addtoset ensures in likes array id is only one time.
             $addToSet:{likes:id},
             $pull:{dislikes:id}
         })
         res.status(200).json("The video has been liked.");
     }catch(err){
+        
         next(err)
     }
 };

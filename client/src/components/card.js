@@ -54,6 +54,7 @@ const Info = styled.div`
 `;
 
 const Card = ({ type, video }) => {
+  //to fetch video userId data.
   const [channel, setChannel] = useState({});
 
   useEffect(()=>{
@@ -63,9 +64,10 @@ const Card = ({ type, video }) => {
     }
     fetchChannel();
   },[video.userId]);
+  //after calling the function channel will have video's user data.
 
   return (
-    <Link to="/video/test" style={{ textDecoration: "none" }}>
+    <Link to={`/video/${video._id}`} style={{ textDecoration: "none" }}>
       <Container type={type}>
         <Image
           type={type}
