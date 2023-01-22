@@ -24,13 +24,15 @@ export const userSlice = createSlice({
         state.error = true;
     },
     logout: (state)=>{
-        return initialState;
+        state.currentUser = null;
+        state.loading = false;
+        state.error = false;
     },
     subscription:(state,action)=>{
         if(state.currentUser.subscribedUsers.includes(action.payload)){
             state.currentUser.subscribedUsers.splice(
                 state.currentUser.subscribedUsers.findIndex(
-                    (channelId)=> channelId ===action.payload
+                    (channelId)=> channelId === action.payload
                 ),
                 1
             );

@@ -39,13 +39,13 @@ const Text = styled.span`
 const Comment = ({comment}) => {
   const [channel,setChannel] = useState({});
   useEffect(()=>{
-    const fetchComemnt= async()=>{
+    const fetchComment= async()=>{
       const channelRes = await axios.get(
         `/users/find/${comment.data.userId}`
       );
       setChannel(channelRes.data);
     }
-    fetchComemnt();
+    fetchComment();
   },[comment.userId]);
   
   return (

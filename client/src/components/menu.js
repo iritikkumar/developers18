@@ -12,6 +12,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from "react-router-dom";
 import { color } from "@mui/system";
 import { useSelector } from "react-redux";
+import { logout } from "../redux/userSlice";
+import { useDispatch } from "react-redux";
 
 
 const Container = styled.div`
@@ -72,20 +74,28 @@ const Button = styled.button`
 `;
 
 const Menu = ({ darkMode, setDarkMode }) => {
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+
+  const handleLogout = async() => {
+    //e.preventDefault();
+    dispatch(logout());
+  };
+
     return (
       <Container>
         <Wrapper>
+          <Logo>
+            <Img src={realm} />
+            REALM GAMING
+          </Logo>
+
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-            <Logo>
-              <Img src={realm} />
-              REALM GAMING
-            </Logo>
+            <Item>
+              <HomeIcon />
+              HOME
+            </Item>
           </Link>
-          <Item>
-            <HomeIcon />
-            HOME
-          </Item>
           <Link
             to="trends"
             style={{ textDecoration: "none", color: "inherit" }}
@@ -110,7 +120,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
           </Item>
           <Hr />
 
-          {!currentUser&&
+          {!currentUser ? (
             <>
               <Login>
                 Sign in to like videos, comment, and subscribe.
@@ -123,7 +133,15 @@ const Menu = ({ darkMode, setDarkMode }) => {
               </Login>
               <Hr />
             </>
-          }
+          ) : (
+            <>
+              <Button onClick={handleLogout}>
+                <AccountCircleIcon />
+                Logout
+              </Button>
+              <Hr />
+            </>
+          )}
 
           <Item>
             <LiveTvIcon />

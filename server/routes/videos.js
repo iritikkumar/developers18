@@ -1,5 +1,5 @@
 import express from "express";
-import { addVideo, addView, getByTag, getVideo, random, search, sub, trend } from "../controllers/video.js";
+import { addVideo, addView, getByTag, getVideo, random, search, sub, trend,deleteVideo} from "../controllers/video.js";
 import {verifyToken} from "../verifyToken.js"
 
 const router = express.Router();
@@ -10,7 +10,7 @@ router.post("/", verifyToken, addVideo);
 //You can edit and update a particular account through a PUT request.
 router.put("/:id", verifyToken, addVideo);
 //You can delete users and data using the DELETE request method.
-router.delete("/:id", verifyToken, addVideo);
+router.delete("/:id", verifyToken, deleteVideo);
 router.get("/find/:id", getVideo);
 router.put("/view/:id", addView);
 router.get("/trend", trend);

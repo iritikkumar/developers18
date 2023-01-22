@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Comment from "./comment";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 
 
@@ -33,6 +34,7 @@ const Input = styled.input`
 const Comments = ({videoId}) => {
   const {currentUser} = useSelector((state)=>state.user);
   const [comments, setComments] = useState([]);
+  const path = useLocation().pathname.split("/")[2];
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -45,14 +47,32 @@ const Comments = ({videoId}) => {
     fetchComments();
   }, [videoId]);
 
+  const handleAddComment= async(text)=>{
+     
+     try {
+       const resc = await axios.post("/comments",{
+        videoId:path,
+        desc: text
+      });
+     } catch (err) {
+       console.log(err);
+     }
+  }
+
   return (
     <Container>
       <NewComment>
         <Avatar src={currentUser.img} />
-        <Input placeholder="Add a comment..." />
+        <form onSubmit={(e)=>{
+          e.preventDefault();
+          const com = e.target[0].value;
+          handleAddComment(com);
+        }}>
+          <Input placeholder="Add a comment..." />
+        </form>
       </NewComment>
-      {comments.map(comment=>(
-        <Comment key={comment._id} comment={comment}/>
+      {comments.map((comment) => (
+        <Comment key={comment._id} comment={comment} />
       ))}
     </Container>
   );

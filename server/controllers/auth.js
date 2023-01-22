@@ -38,7 +38,6 @@ export const signin = async (req, res, next) => {
     //process.env.JWT it is a secret key. When you receive a JWT from the client, you can verify that JWT with this that secret key stored on the server.
     const token = jwt.sign({ id: user._id }, process.env.JWT);
     //to separate password
-    console.log("token",token);
     const { password, ...others } = user._doc;
 
     //to send token to user we use cookies
