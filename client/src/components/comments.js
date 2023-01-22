@@ -4,6 +4,8 @@ import Comment from "./comment";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { commentSuccess } from "../redux/commentSlice";
+import { useDispatch } from "react-redux";
 
 
 
@@ -32,9 +34,12 @@ const Input = styled.input`
 `;
 
 const Comments = ({videoId}) => {
-  const {currentUser} = useSelector((state)=>state.user);
+  const dispatch = useDispatch();
+  const { currentComment } = useSelector((state)=>state.comment);
+  const { currentUser } = useSelector((state) => state.user);
   const [comments, setComments] = useState([]);
   const path = useLocation().pathname.split("/")[2];
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -47,30 +52,42 @@ const Comments = ({videoId}) => {
     fetchComments();
   }, [videoId]);
 
+  const handleUserInput = (e) => {
+    setInputValue(e.target.value);
+  };
+  
   const handleAddComment= async(text)=>{
-     
      try {
        const resc = await axios.post("/comments",{
         videoId:path,
         desc: text
       });
+      dispatch(commentSuccess(resc.data));
+      setInputValue("");
      } catch (err) {
        console.log(err);
      }
   }
-
+  
   return (
     <Container>
       <NewComment>
         <Avatar src={currentUser.img} />
-        <form onSubmit={(e)=>{
-          e.preventDefault();
-          const com = e.target[0].value;
-          handleAddComment(com);
-        }}>
-          <Input placeholder="Add a comment..." />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const com = e.target[0].value;
+            handleAddComment(com);
+          }}
+        >
+          <Input
+            value={inputValue}
+            onChange={handleUserInput}
+            placeholder="Add a comment..."
+          />
         </form>
       </NewComment>
+      <Comment key={currentComment._id} comment={currentComment} />
       {comments.map((comment) => (
         <Comment key={comment._id} comment={comment} />
       ))}

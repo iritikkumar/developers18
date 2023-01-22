@@ -45,11 +45,6 @@ export const videoSlice = createSlice({
         );
       }
     },
-    // comment: (state,action) =>{
-    //   if(!state.currentVideo.comment.includes(action.payload)){
-    //     state.currentVideo.comments.push(action.payload);
-    //   }
-    // },
   },
 });
 

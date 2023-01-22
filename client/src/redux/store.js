@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 import videoReducer from "./videoSlice";
+import commentReducer from "./commentSlice";
 
 //persister is used so that after refreshing the page user remain signed in.
 //it stores user and other elements in the local storage.
@@ -24,7 +25,7 @@ const persistConfig = {
   storage,
 };
 
-const rootReducer = combineReducers({video: videoReducer,user: userReducer});
+const rootReducer = combineReducers({video: videoReducer,user: userReducer, comment: commentReducer});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
