@@ -114,10 +114,15 @@ const Menu = ({ darkMode, setDarkMode }) => {
               FOLLOWING
             </Item>
           </Link>
-          <Item>
-            <VideocamIcon />
-            YOUR VIDEOS
-          </Item>
+          <Link
+            to="myVideos"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Item>
+              <VideocamIcon />
+              YOUR VIDEOS
+            </Item>
+          </Link>
           <Hr />
 
           {!currentUser ? (

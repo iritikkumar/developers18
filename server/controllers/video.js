@@ -126,3 +126,15 @@ export const search = async (req,res,next)=>{
         next(err)
     }
 };
+
+export const myVideo = async (req, res, next) => {
+  try {
+    
+    const videos = await Video.find({
+        userId: req.user.id
+    });
+    res.status(200).json(videos);
+  } catch (err) {
+    console.log(err);
+  }
+};

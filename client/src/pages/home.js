@@ -19,6 +19,7 @@ const Home = ({type}) => {
     const fetchVideos = async ()=>{
       //axios,common method to communicate with the database and backend in React.
       const res = await axios.get(`/videos/${type}`);
+      
       //here setVideos is updated.
       setVideos(res.data);
     }
