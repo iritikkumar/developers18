@@ -133,7 +133,7 @@ export const myVideo = async (req, res, next) => {
     const videos = await Video.find({
         userId: req.user.id
     });
-    res.status(200).json(videos);
+    res.status(200).json(videos.flat().sort((a, b) => b.createdAt - a.createdAt));
   } catch (err) {
     console.log(err);
   }
