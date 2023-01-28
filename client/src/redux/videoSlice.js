@@ -1,5 +1,5 @@
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   currentVideo: null,
@@ -8,7 +8,7 @@ const initialState = {
 }
 
 export const videoSlice = createSlice({
-  name: "video",
+  name: 'video',
   initialState,
   reducers: {
     fetchStart: (state) => {

@@ -119,7 +119,7 @@ const VideoFrame = styled.video`
 `
 
 const Video = () => {
-  const { currentUser } = useSelector(state=>state.user);
+  const {currentUser} = useSelector(state=>state.user);
   const {currentVideo} = useSelector((state)=>state.video);
   const dispatch = useDispatch();
 
@@ -136,7 +136,6 @@ const Video = () => {
         const channelRes = await axios.get(`/users/find/${videoRes.data.userId}`);
         //setVideo(videoRes.data);
         setChannel(channelRes.data);
-        
         dispatch(fetchSuccess(videoRes.data));
         
       } catch (err) {
@@ -167,24 +166,27 @@ const Video = () => {
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame src={currentVideo.videoUrl} controls/>
+          <VideoFrame src={currentVideo && currentVideo.videoUrl} controls />
         </VideoWrapper>
-        <Title>{currentVideo.title}</Title>
+        <Title>{currentVideo && currentVideo.title}</Title>
         <Details>
           <Info>
-            {currentVideo.views} views • {format(currentVideo.createdAt)}
+            {currentVideo && currentVideo.views} views •{" "}
+            {format(currentVideo && currentVideo.createdAt)}
           </Info>
           <Buttons>
             <Button onClick={handleLike}>
-              {currentVideo.likes?.includes(currentUser?._id) ? (
+              {currentVideo &&
+              currentVideo.likes?.includes(currentUser?._id) ? (
                 <ThumbUpIcon />
               ) : (
                 <ThumbUpOutlinedIcon />
               )}{" "}
-              {currentVideo.likes?.length}
+              {currentVideo && currentVideo.likes?.length}
             </Button>
             <Button onClick={handleDislike}>
-              {currentVideo.dislikes?.includes(currentUser?._id) ? (
+              {currentVideo &&
+              currentVideo.dislikes?.includes(currentUser?._id) ? (
                 <ThumbDownIcon />
               ) : (
                 <ThumbDownOffAltOutlinedIcon />
@@ -206,15 +208,19 @@ const Video = () => {
             <ChannelDetail>
               <ChannelName>{channel.name}</ChannelName>
               <ChannelCounter>{channel.subscribers} followers</ChannelCounter>
-              <Description>{currentVideo.desc}</Description>
+              <Description>{currentVideo && currentVideo.desc}</Description>
             </ChannelDetail>
           </AccDetails>
-          <Follow onClick={handleSubscribe}>{currentUser.subscribedUsers?.includes(channel._id)?"Followed":"Follow"}</Follow>
+          <Follow onClick={handleSubscribe}>
+            {currentUser.subscribedUsers?.includes(channel._id)
+              ? "Followed"
+              : "Follow"}
+          </Follow>
         </Account>
         <Hr />
-        <Comments videoId={currentVideo._id}/>
+        <Comments videoId={currentVideo && currentVideo._id} />
       </Content>
-      <Recommendation tags={currentVideo.tags}></Recommendation>
+      <Recommendation tags={currentVideo && currentVideo.tags}></Recommendation>
     </Container>
   );
 };

@@ -63,6 +63,7 @@ const Comments = ({videoId}) => {
         desc: text
       });
       dispatch(commentSuccess(resc.data));
+      //console.log({text});
       setInputValue("");
      } catch (err) {
        console.log(err);
@@ -87,7 +88,10 @@ const Comments = ({videoId}) => {
           />
         </form>
       </NewComment>
-      <Comment key={currentComment._id} comment={currentComment} />
+      <Comment
+        key={currentComment._id}
+        comment={currentComment && currentComment}
+      />
       {comments.map((comment) => (
         <Comment key={comment._id} comment={comment} />
       ))}

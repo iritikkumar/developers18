@@ -41,7 +41,7 @@ const Comment = ({comment}) => {
   useEffect(()=>{
     const fetchComment= async()=>{
       const channelRes = await axios.get(
-        `/users/find/${comment.data.userId}`
+        `/users/find/${comment.userId}`
       );
       setChannel(channelRes.data);
     }
@@ -50,10 +50,10 @@ const Comment = ({comment}) => {
   
   return (
     <Container>
-      <Avatar src={channel.img} />
+      <Avatar src={channel && channel.img} />
       <Details>
         <Name>
-          {channel.name} <Date>1 day ago</Date>
+          {channel && channel.name} <Date>1 day ago</Date>
         </Name>
         <Text>{comment.desc}</Text>
       </Details>
