@@ -48,7 +48,7 @@ const Button = styled.button`
   background-color: ${({ theme }) => theme.soft};
   color: ${({ theme }) => theme.textSoft};
 `;
-
+//to add forgot password
 const SignIn = () =>{
     const navigate = useNavigate();
     const [name,setName] = useState("");
