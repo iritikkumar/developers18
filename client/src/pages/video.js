@@ -211,11 +211,18 @@ const Video = () => {
               <Description>{currentVideo && currentVideo.desc}</Description>
             </ChannelDetail>
           </AccDetails>
-          <Follow onClick={handleSubscribe}>
-            {currentUser.subscribedUsers?.includes(channel._id)
-              ? "Followed"
-              : "Follow"}
-          </Follow>
+
+          {currentUser ? (
+            <>
+              <Follow onClick={handleSubscribe}>
+                {currentUser.subscribedUsers?.includes(channel._id)
+                  ? "Followed"
+                  : "Follow"}
+              </Follow>
+            </>
+          ) : (
+            <></>
+          )}
         </Account>
         <Hr />
         <Comments videoId={currentVideo && currentVideo._id} />
