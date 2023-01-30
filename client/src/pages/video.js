@@ -174,6 +174,7 @@ const Video = () => {
             {currentVideo && currentVideo.views} views •{" "}
             {format(currentVideo && currentVideo.createdAt)}
           </Info>
+          {currentUser?<>
           <Buttons>
             <Button onClick={handleLike}>
               {currentVideo &&
@@ -200,6 +201,9 @@ const Video = () => {
               <AddTaskOutlinedIcon /> Save
             </Button>
           </Buttons>
+          </>
+          :<></>
+          }
         </Details>
         <Hr />
         <Account>

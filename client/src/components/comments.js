@@ -73,36 +73,41 @@ const Comments = ({videoId}) => {
   
   return (
     <Container>
-      <NewComment>
-        <Avatar src={currentUser.img} />
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            const com = e.target[0].value;
-            handleAddComment(com);
-            fetchComments();
-          }}
-        >
-          <Input
-            value={inputValue}
-            onChange={handleUserInput}
-            placeholder="Add a comment..."
-          />
-        </form>
-      </NewComment>
-      {currentComment&&currentComment.videoId===path?
-      <Comment
-        key={currentComment._id}
-        comment={currentComment}
-      />
-      :<></>
-      }
-      {comments.map((comment) => (
-        currentComment&&currentComment._id===comment._id?
+      {currentUser ? (
+        <>
+          <NewComment>
+            <Avatar src={currentUser.img} />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const com = e.target[0].value;
+                handleAddComment(com);
+                fetchComments();
+              }}
+            >
+              <Input
+                value={inputValue}
+                onChange={handleUserInput}
+                placeholder="Add a comment..."
+              />
+            </form>
+          </NewComment>
+          {currentComment && currentComment.videoId === path ? (
+            <Comment key={currentComment._id} comment={currentComment} />
+          ) : (
+            <></>
+          )}
+          {comments.map((comment) =>
+            currentComment && currentComment._id === comment._id ? (
+              <></>
+            ) : (
+              <Comment key={comment._id} comment={comment} />
+            )
+          )}
+        </>
+      ) : (
         <></>
-        :
-        <Comment key={comment._id} comment={comment} />
-      ))}
+      )}
     </Container>
   );
 };
