@@ -98,7 +98,7 @@ const Comments = ({videoId}) => {
       :<></>
       }
       {comments.map((comment) => (
-        currentComment._id===comment._id?
+        currentComment&&currentComment._id===comment._id?
         <></>
         :
         <Comment key={comment._id} comment={comment} />
