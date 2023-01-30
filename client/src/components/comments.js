@@ -41,14 +41,15 @@ const Comments = ({videoId}) => {
   const path = useLocation().pathname.split("/")[2];
   const [inputValue, setInputValue] = useState("");
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const res = await axios.get(`/comments/${videoId}`);
+  const fetchComments = async () => {
+    try {
+      const res = await axios.get(`/comments/${videoId}`);
 
-        setComments(res.data);
-      } catch (err) {}
-    };
+      setComments(res.data);
+    } catch (err) {}
+  };
+
+  useEffect(() => {
     fetchComments();
   }, [videoId]);
 
@@ -79,6 +80,7 @@ const Comments = ({videoId}) => {
             e.preventDefault();
             const com = e.target[0].value;
             handleAddComment(com);
+            fetchComments();
           }}
         >
           <Input
@@ -88,11 +90,17 @@ const Comments = ({videoId}) => {
           />
         </form>
       </NewComment>
+      {currentComment&&currentComment.videoId===path?
       <Comment
         key={currentComment._id}
-        comment={currentComment && currentComment}
+        comment={currentComment}
       />
+      :<></>
+      }
       {comments.map((comment) => (
+        currentComment._id===comment._id?
+        <></>
+        :
         <Comment key={comment._id} comment={comment} />
       ))}
     </Container>
