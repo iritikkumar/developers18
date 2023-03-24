@@ -41,20 +41,21 @@ export const userSlice = createSlice({
         }
     },
     watchHistory:(state, action)=>{
-        // if(!state.currentUser.watchedVideos.includes(action.payload)){
-        //     state.currentUser.watchedVideos.push(action.payload);   
-        // }
-
-        if(state.currentUser.watchedVideos.includes(action.payload)){
-            state.currentUser.watchedVideos.splice(
-                state.currentUser.watchedVideos.findIndex(
-                    (channelId)=> channelId === action.payload
-                ),
-                1
-            );
-        }else{
-            state.currentUser.subscribedUsers.push(action.payload);
+        console.log(action.payload);
+        if(!state.currentUser.watchedVideos.includes(action.payload)){
+            state.currentUser.watchedVideos.push(action.payload);   
         }
+
+        // if(state.currentUser.watchedVideos.includes(action.payload)){
+        //     state.currentUser.watchedVideos.splice(
+        //         state.currentUser.watchedVideos.findIndex(
+        //             (channelId)=> channelId === action.payload
+        //         ),
+        //         1
+        //     );
+        // }else{
+        //     state.currentUser.subscribedUsers.push(action.payload);
+        // }
     }
   },
 });
