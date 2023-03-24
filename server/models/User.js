@@ -25,6 +25,9 @@ const UserSchema = new mongoose.Schema({
   subscribedUsers:{
     type: [String]
   },
+  watchedVideos:{
+    type: [String],
+  },
   fromGoogle:{
     type:Boolean,
     default: false
