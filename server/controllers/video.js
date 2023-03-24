@@ -72,21 +72,39 @@ export const addView = async (req,res,next)=>{
 export const random = async (req,res,next)=>{
     try{
         //aggregate gives a rondom sample , here random 40 samples
-        const videos = await Video.aggregate([{$sample:{size:40}}])
+        const videos = await Video.aggregate([{$sample:{size:40}}]);
         res.status(200).json(videos)
     } catch(err){
         next(err)
     }
 };
+
 export const trend = async (req,res,next)=>{
     try{
         //-1 brings most viewed videos and 1 brings least viewed. 
         const videos = await Video.find().sort({views:-1});
+        // console.log(videos);
         res.status(200).json(videos)
     } catch(err){
         next(err)
     }
 };
+
+export const history = async (req,res,next)=>{
+    try{
+        const user = await User.findById(req.user.id);
+        const videos = user.watchedVideos;
+        const list = [];
+        for (let i = 0; i < videos.length; i++) {
+            const item = await Video.findById(videos[i]);
+            list.push(item);
+        }
+        res.status(200).json(list);
+    } catch(err){
+        next(err);
+    }
+};
+
 export const sub = async (req,res,next)=>{
     try{
         const user = await User.findById(req.user.id)

@@ -79,6 +79,21 @@ export const unsubscribe = async (req, res, next) => {
     }
 };
 
+export const watchHistory = async (req, res, next) => {
+    const id = req.user.id;
+    const videoId = req.params.videoId;
+    // console.log(videoId);
+    try {
+        await User.findByIdAndUpdate(id,{
+            $push: {watchedVideos: videoId}
+        })
+        console.log("Video seen");
+        res.status(200).json("Video added to watch history.");
+    } catch (err) {
+        next(err)
+    }
+};
+
 export const like = async (req, res, next) => {
     const id = req.user.id;
     const videoId = req.params.videoId;
@@ -103,8 +118,10 @@ export const dislike = async (req, res, next) => {
             $addToSet:{dislikes:id},
             $pull:{likes:id}
         })
-        res.status(200).json("The video has been dis liked.");
+        res.status(200).json("The video has been disliked.");
     }catch(err){
         next(err)
     }
 };
+
+

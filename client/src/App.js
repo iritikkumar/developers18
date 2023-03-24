@@ -40,6 +40,7 @@ function App(){
                   <Route path="myVideos" element={<Home type="myVideo" />} />
                   <Route path="search" element={<Search />} />
                   <Route path="signin" element={<SignIn />} />
+                  <Route path="history" element={<Home type="history" />} />
                   <Route path="video">
                     <Route path=":id" element={<Video />} />
                   </Route>

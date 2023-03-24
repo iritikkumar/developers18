@@ -39,7 +39,9 @@ const Logo = styled.div`
 `;
 
 const Img = styled.img`
+  width: 25px;
   height: 25px;
+  border-radius: 50%;
 `;
 
 const Item = styled.div`
@@ -152,11 +154,15 @@ const Menu = ({ darkMode, setDarkMode }) => {
             <LiveTvIcon />
             GO LIVE
           </Item>
-
+          <Link
+            to="history"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
           <Item>
             <HistoryIcon />
             HISTORY
           </Item>
+          </Link>
 
           <Item>
             <SettingsIcon />

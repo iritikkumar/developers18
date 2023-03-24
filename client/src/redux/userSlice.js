@@ -40,9 +40,25 @@ export const userSlice = createSlice({
             state.currentUser.subscribedUsers.push(action.payload);
         }
     },
+    watchHistory:(state, action)=>{
+        // if(!state.currentUser.watchedVideos.includes(action.payload)){
+        //     state.currentUser.watchedVideos.push(action.payload);   
+        // }
+
+        if(state.currentUser.watchedVideos.includes(action.payload)){
+            state.currentUser.watchedVideos.splice(
+                state.currentUser.watchedVideos.findIndex(
+                    (channelId)=> channelId === action.payload
+                ),
+                1
+            );
+        }else{
+            state.currentUser.subscribedUsers.push(action.payload);
+        }
+    }
   },
 });
 
-export const {loginStart,loginFailure,loginSuccess,logout, subscription} = userSlice.actions;
+export const {loginStart,loginFailure,loginSuccess,logout, subscription, watchHistory} = userSlice.actions;
 
 export default userSlice.reducer;

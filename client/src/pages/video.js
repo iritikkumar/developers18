@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { fetchFailure,fetchSuccess,fetchStart,like,dislike } from "../redux/videoSlice";
-import { subscription } from "../redux/userSlice";
+import { subscription, watchHistory} from "../redux/userSlice";
 import { format } from "timeago.js";
 import Recommendation from "../components/Recommendation";
 
@@ -145,6 +145,11 @@ const Video = () => {
     fetchData();
   },[path,dispatch])
 
+  const handleHistory = async ()=>{
+    await axios.put(`/users/history/${currentVideo._id}`);
+    dispatch(watchHistory(currentUser._id));
+  }
+
   const handleLike = async ()=>{
     await axios.put(`/users/like/${currentVideo._id}`)
     dispatch(like(currentUser._id));
@@ -163,7 +168,7 @@ const Video = () => {
   }
   
   return (
-    <Container>
+    <Container onLoad={handleHistory} >
       <Content>
         <VideoWrapper>
           <VideoFrame src={currentVideo && currentVideo.videoUrl} controls />
@@ -218,7 +223,7 @@ const Video = () => {
           </Follow>
         </Account>
         <Hr />
-        <Comments videoId={currentVideo && currentVideo._id} />
+        {/* <Comments videoId={currentVideo && currentVideo._id} /> */}
       </Content>
       <Recommendation tags={currentVideo && currentVideo.tags}></Recommendation>
     </Container>

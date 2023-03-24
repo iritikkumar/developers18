@@ -40,5 +40,5 @@ app.use((err,req,res,next)=>{
 
 app.listen(8200, () => {
     connect();
-  console.log("Connected");
+  console.log("Connected to port 8200");
 });

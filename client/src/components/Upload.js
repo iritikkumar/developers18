@@ -39,7 +39,7 @@ const Wrapper = styled.div`
 const Close = styled.div`
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 15px;
   cursor: pointer;
 `
 const Title = styled.h1`
