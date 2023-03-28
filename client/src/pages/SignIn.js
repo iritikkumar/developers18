@@ -61,6 +61,7 @@ const SignIn = () =>{
         //it prevent refreshing of page on clicking signin button.
         e.preventDefault();
         dispatch(loginStart());
+
         try {
           //here we are making a request and sending name amd password.
             const res = await axios.post("/auth/signin",{name,password});
@@ -93,6 +94,21 @@ const SignIn = () =>{
         });
     }; 
 
+    const handleSignup = async(e) =>{
+      //it prevent refreshing of page on clicking signin button.
+      e.preventDefault();
+      dispatch(loginStart());
+
+      try {
+        //here we are making a request and sending name amd password.
+          const res = await axios.post("/auth/signup",{name,email,password});
+          dispatch(loginSuccess(res.data));
+          navigate(`/`);
+      } catch (err) {
+          dispatch(loginFailure());
+      }
+  }
+
     return (
       <Container>
         <Wrapper>
@@ -124,7 +140,7 @@ const SignIn = () =>{
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button>SignUp</Button>
+          <Button onClick={handleSignup}>SignUp</Button>
         </Wrapper>
       </Container>
     );
